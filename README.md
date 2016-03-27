@@ -9,6 +9,8 @@ MIT License
 
 TO DO:
 
+-Verify inverse kinematics and fix any problems
+
 -Get angles from IMUs
 
 -3D print IMU holder
