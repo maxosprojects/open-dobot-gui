@@ -1,3 +1,15 @@
+/*
+"""
+Open Source Dobot GUI firmware: initial firmware used for testing
+First Author: Mike Ferguson www.mikeahferguson.com 3/26/2016
+Additional Authors (Add your name below):
+1.
+License: MIT
+
+
+
+
+*/
 #include "AccelStepper.h"
 
 
