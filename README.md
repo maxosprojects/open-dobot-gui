@@ -22,6 +22,8 @@ TO DO:
 
 -Verify inverse kinematics and fix any problems
 
+-Greatly improve the serial communication protocol. I just used the quickest method I could find that works so I could get testing the inverse kinematics.
+
 -Get angles from IMUs
 
 -3D print IMU holder
@@ -29,6 +31,8 @@ TO DO:
 -3D print endstop holder and connect end stops
 
 -Implement emergency stop function in GUI
+
+-implement incrememntal move functions
 
 -much more, but too tired to list it all
 
