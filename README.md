@@ -1,7 +1,7 @@
 # open-dobot-gui
 GUI Application to control a Dobot robotic arm via an Arduino Mega 2560 and a RAMPS 1.4 board. 
 
-Inverse Kinematics Implemented!
+Inverse Kinematics Implemented! I will write up more about this some other time. There's a link in the code to a youtube video that explains most of it.
 
 100% open source hardware and software
 
