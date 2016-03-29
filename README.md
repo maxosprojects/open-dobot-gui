@@ -9,9 +9,12 @@ MIT License
 
 NOTE: This repository is literally just getting started. As such, the application is not quite yet ready for those who don't know how to code or as a standalone release. It's fairly close though. The major value of this software is the inverse kinematics functions at the moment.
 
-Videos:\n
+Videos:
+
 [Set up and move to point demo](https://youtu.be/FjHylzeWPgg)
+
 [Inverse Kinematics Quick Explanation](https://youtu.be/Nsgcq8Uz_Vc)
+
 [Inverse Kinematics C++ 3D simulation Demo](https://youtu.be/5oExIlkn5EA)
 
 
