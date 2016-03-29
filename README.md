@@ -9,6 +9,7 @@ MIT License
 
 NOTE: This repository is literally just getting started. As such, the application is not quite yet ready for those who don't know how to code or as a standalone release. It's fairly close though. The major value of this software is the inverse kinematics functions at the moment.
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YNsgcq8Uz_Vc/0.jpg)](https://www.youtube.com/watch?v=Nsgcq8Uz_Vc)
 
 The gui app is written in python and uses pyqt. It is not yet completely functional, but works enough for testing purposes (if you know how to code). Most of the remaining work on it is fairly easy to do, just takes time, which I am a bit short on due to school. Most updates will probably happen on weekends. Also included in this repository is a c++ qt project which performs a 3d simulation of the inverse kinematics, which is useful in verifying that the inverse kinematics are correctly implemented. Currently, I'm having trouble defining the work area limits. I need to do that somehow. The lower arm angle limits is what's tripping me up. The inverse kinematics on the robot itself seems to work. Just be careful about transforming angles to the correct orientation. I might have messed that up a bit. If I did, it's subtle. 
 
