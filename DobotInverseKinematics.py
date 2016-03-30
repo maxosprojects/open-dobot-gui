@@ -89,6 +89,10 @@ def get_arm_angles_from_radius_z_coordinate_using_2d_revolute_revolute_inverse_k
 
 
 
+
+
+
+
 #input:
 #x,y coordinate
 #output
@@ -106,7 +110,7 @@ def get_polar_coordinate_angle_from_cartesian_x_y_coordinate(x,y):
 def get_polar_coordinate_radius_from_cartesian_x_y_coordinate(x,y):
     #use cartesian to polar conversion equations to get the angle
     #alternatively, this is just using the circle equation rule
-    radius = math.sqrt( math.sqrt(pow(x,2) + pow(y,2)) )
+    radius = math.sqrt(pow(x,2) + pow(y,2))
     return radius
 
 def get_distance_from_origin_to_cartesian_point_3D(x,y,z):

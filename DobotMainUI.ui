@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>451</height>
+    <width>625</width>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>531</width>
-      <height>401</height>
+      <width>561</width>
+      <height>461</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -37,9 +37,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>140</y>
+        <y>170</y>
         <width>341</width>
-        <height>231</height>
+        <height>211</height>
        </rect>
       </property>
       <property name="title">
@@ -119,12 +119,12 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>21</x>
          <y>20</y>
-         <width>171</width>
+         <width>194</width>
          <height>175</height>
         </rect>
        </property>
@@ -259,12 +259,15 @@
         </item>
        </layout>
       </widget>
+      <zorder>layoutWidget</zorder>
+      <zorder>layoutWidget</zorder>
+      <zorder>lineEditMoveToZ</zorder>
      </widget>
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
         <x>350</x>
-        <y>140</y>
+        <y>120</y>
         <width>171</width>
         <height>151</height>
        </rect>
@@ -300,7 +303,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToX">
             <property name="text">
-             <string>1</string>
+             <string>115</string>
             </property>
            </widget>
           </item>
@@ -324,7 +327,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToY">
             <property name="text">
-             <string>1</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
@@ -348,7 +351,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToZ">
             <property name="text">
-             <string>1</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
@@ -527,6 +530,127 @@
         </layout>
        </item>
       </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>280</y>
+        <width>171</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Move to Angles</string>
+      </property>
+      <widget class="QWidget" name="layoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>131</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_22">
+          <item>
+           <widget class="QLabel" name="label_21">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Base:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditMoveToBaseAngle">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <item>
+           <widget class="QLabel" name="label_22">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Upper Arm:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditMoveToUpperArmAngle">
+            <property name="text">
+             <string>-20</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_24">
+          <item>
+           <widget class="QLabel" name="label_23">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Lower Arm:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditMoveToLowerArmAngle">
+            <property name="text">
+             <string>12</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_25">
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonMoveToAngles">
+            <property name="text">
+             <string>Move</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tabConfiguration">
@@ -721,7 +845,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>550</width>
+     <width>625</width>
      <height>21</height>
     </rect>
    </property>

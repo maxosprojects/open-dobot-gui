@@ -21,14 +21,19 @@ License: MIT
 int stepperMotorStepsPerRevolution = 200;
 //I'm using a ramps 1.4 board with all 3 jumpers connected, which gives me a microstepping mode of 1/16.
 //In other words, the motor is set up so it takes 16 steps to move 1 of the default steps.
-int microsteppingMultiplier = 16;
+//microstepping jumper guide for the a4988 stepper driver: https://www.pololu.com/product/1182
+int baseMicrosteppingMultiplier = 16;
+int upperArmMicrosteppingMultiplier = 16;
+int lowerArmMicrosteppingMultiplier = 16;
 //The NEMA 17 stepper motors Dobot uses are connected to a planetary gearbox, the black cylinders. 
 //It basically just means that the stepper motor is rotating a smaller gear. That smaller gear is in turn rotating a larger one.
 //The gears are set up such that rotating the smaller gear by some number of degrees rotates the larger one by a tenth of that number of degrees (10:1 ratio)
 //The bigger gears are actually moving the arm, so the number of steps is increased by a factor of 10 (the gear ratio).
 int stepperPlanetaryGearBoxMultiplier = 10;
 //This variable will hold the aqctual number of steps per revolution and is calculate by multiplying the three previous variables together.
-int actualStepsPerRevolution = 0;
+int baseActualStepsPerRevolution = 0;
+int upperArmActualStepsPerRevolution = 0;
+int lowerArmActualStepsPerRevolution = 0;
 ///END STEPPER MOTOR SETTINGS
 
 ///START STEPPER MOTOR DRIVER PIN SETTINGS
@@ -94,6 +99,8 @@ float lowerArmAngle = 0;
 
 
 AccelStepper baseAccelObj(1, E_STEP_PIN, E_DIR_PIN);
+AccelStepper upperArmAccelObj(1, X_STEP_PIN, X_DIR_PIN);
+AccelStepper lowerArmAccelObj(1, Y_STEP_PIN, Y_DIR_PIN);
 
 //the setup function is used to setup code (e.g. variables)
 void setup() {
@@ -133,7 +140,9 @@ void setup() {
   //START DOBOT SPECIFIC STEPPER MOTOR SETUP
   
   //calculate the actual number of steps it takes for each stepper motor to rotate 360 degrees
-  actualStepsPerRevolution = stepperMotorStepsPerRevolution * microsteppingMultiplier * stepperPlanetaryGearBoxMultiplier;
+  baseActualStepsPerRevolution = stepperMotorStepsPerRevolution * baseMicrosteppingMultiplier * stepperPlanetaryGearBoxMultiplier;
+  upperArmActualStepsPerRevolution = stepperMotorStepsPerRevolution * upperArmMicrosteppingMultiplier * stepperPlanetaryGearBoxMultiplier;
+  lowerArmActualStepsPerRevolution = stepperMotorStepsPerRevolution * lowerArmMicrosteppingMultiplier * stepperPlanetaryGearBoxMultiplier;
 
   //initialize dobot specific variables to store the relevant pin numbers in
   //this will depend on how you have wired up your Dobot's stepper motors to the ramps 1.4 board
@@ -148,11 +157,19 @@ void setup() {
   //Connect to the serial port. The input argument is the baud rate. IMPORTNAT: Any software communicating to the arduino must use the same baud rate!
   Serial.begin(115200);
 
-
+//these settings  need to be optimized, especially when using lower microstepping settings. These worked well with 1/16th, and decent with 1/8 (slipping occured if moving too fast though)
   baseAccelObj.setMaxSpeed(10000);
   baseAccelObj.setSpeed(1000);
   baseAccelObj.setAcceleration(2000);
 
+  upperArmAccelObj.setMaxSpeed(10000);
+  upperArmAccelObj.setSpeed(1000);
+  upperArmAccelObj.setAcceleration(2000);
+
+  lowerArmAccelObj.setMaxSpeed(10000);
+  lowerArmAccelObj.setSpeed(1000);
+  lowerArmAccelObj.setAcceleration(2000);
+  
 }
 
 
@@ -227,15 +244,68 @@ void loop() {
 
 void moveArmToAngles(float baseAngle, float upperArmAngle, float lowerArmAngle){
 
+
   Serial.println("Base Angle");
   Serial.println(baseAngle);
-  baseAccelObj.moveTo(baseAngle);
-  while(baseAccelObj.distanceToGo()!= 0){
-     baseAccelObj.run();
+
+  int baseStepNumber = ( (abs(baseAngle)/360) * baseActualStepsPerRevolution ) + 0.5;
+  //need this because of the abs value function, which is needed for proper rounding
+  if (baseAngle < 1){
+    baseStepNumber *= -1;
   }
 
-  /*
+  Serial.println("Base Step Number");
+  Serial.println(baseStepNumber);
+
+
+
+  Serial.println("Upper Arm Angle");
+  Serial.println(upperArmAngle);
+
+  int upperArmStepNumber = ( (abs(upperArmAngle)/360) * upperArmActualStepsPerRevolution ) + 0.5;
+  //need this because of the abs value function, which is needed for proper rounding
+  if (upperArmAngle < 1){
+    upperArmStepNumber *= -1;
+  }
+
+  Serial.println("Upper Arm Step Number");
+  Serial.println(upperArmStepNumber);
+
+
+
+
+  Serial.println("Lower Arm Angle");
+  Serial.println(lowerArmAngle);
+
+  int lowerArmStepNumber = ( (abs(lowerArmAngle)/360) * lowerArmActualStepsPerRevolution ) + 0.5;
+  //need this because of the abs value function, which is needed for proper rounding
+  if (lowerArmAngle < 1){
+    lowerArmStepNumber *= -1;
+  }
+
+  Serial.println("Lower Arm Step Number");
+  Serial.println(lowerArmStepNumber);
+
+
+//necessary to reverse the direction in which the steppers move, so anngles match my defined angles
+
+  baseStepNumber *= -1;
+  upperArmStepNumber *= -1;
+  //lowerArmStepNumber *= -1;
   
+  
+  baseAccelObj.moveTo(baseStepNumber);
+  upperArmAccelObj.moveTo(upperArmStepNumber);
+  lowerArmAccelObj.moveTo(lowerArmStepNumber);
+  while(   (lowerArmAccelObj.distanceToGo()!=0)  ||  (upperArmAccelObj.distanceToGo()!=0)  ||  (baseAccelObj.distanceToGo()!= 0)   ){
+     baseAccelObj.run();
+     upperArmAccelObj.run();
+     lowerArmAccelObj.run();
+  }
+  
+
+ //OLD code for the step function im not using
+  /*
   float degreesToMoveBase = baseAngle - lastBaseAngle;
   boolean baseStepDir = LOW;//start with one direction
   int numBaseSteps = 0;
@@ -251,21 +321,28 @@ void moveArmToAngles(float baseAngle, float upperArmAngle, float lowerArmAngle){
   //see here: http://forum.arduino.cc/index.php?topic=44070.0
   numBaseSteps = ( (abs(degreesToMoveBase)/360.0) * actualStepsPerRevolution ) + 0.5;
 
+
+  Serial.println("Base Steps");
+  Serial.println(numBaseSteps);
+  
   //finally, STEP!!!!!
   //not moving upper and lower arms at the moment
   step(baseStepDir, numBaseSteps, LOW, 0, LOW, 0);
-  
 */
+  
+  
+
   
 }
 
-
+//NOT USING THIS FUNCTION
+//OLD code, not using, couldn't get it to work, but I didn't try very hard
 //this function steps the base, upper arm, and lower arm stepper motors of the Dobot by the specified number of steps
 void step(boolean baseDir, int numBaseSteps,
           boolean upperArmDir, int numUpperArmSteps,
           boolean lowerArmDir, int numLowerArmSteps) {
 
-     //set the direction in 
+     //set the direction to move in
     digitalWrite(baseStepDirPin, baseDir);
     digitalWrite(upperArmStepDirPin, upperArmDir);
     digitalWrite(lowerArmStepDirPin, lowerArmDir);
